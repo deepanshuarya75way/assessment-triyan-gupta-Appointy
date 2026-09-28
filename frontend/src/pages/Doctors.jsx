@@ -2,7 +2,48 @@ import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
+const FollowUpPlan=({backendUrl,token,appointmentId})=>{
+  const [guidance,setGuidance]=useState("");
+  const [actions,setActions]=useState([{
+    title:"",
+    description:"",
+    dueType:"Date",
+    dueAt:"",
+    dueFrom:"",
+    dueTo:"",
+    appointmentNeeded:false
 
+  }
+  ]);
+  const addAction=()=>{
+    setActions([
+      ...actions,
+      {
+        title:"",
+        description:"",
+         dueType:"Date",
+    dueAt:"",
+    dueFrom:"",
+    dueTo:"",
+    appointmentNeeded:false
+      }
+    ])
+  };
+  const updateAction=(i,field,value)=>{
+    const copy=[...actions];
+    copy[i][field]=value;
+    setActions(copy);
+  };
+  const createPlan=async()=>{
+    const {data}=await axios.post(
+      backendUrl+"/api/follow-up/doctor/create",
+      {appointmentId, guidance , actions},{
+        headers:{token}
+      }
+    );
+    alter(data.message);
+  }
+}
 
 const Doctors = () => {
 
@@ -50,6 +91,64 @@ const Doctors = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <h2>Create follow up plan</h2>
+        <textarea
+        placeholder='Follow-up guidance'
+        value={guidance}
+        onChange={e=>setGuidance(e.target.value)}/>
+        {actions.map((a,i)=>(
+          <div key={i}>
+            <input
+            placeholder='="Action title'
+            value={a.title}
+            onChange={e=> updateAction(i,"title",e.target.value)
+
+            }
+            />
+            <input
+             placeholder='="description'
+            value={a.description}
+            onChange={e=> updateAction(i,"description",e.target.value)
+            }
+            />
+            <select
+            value={a.dueType}
+            onChange={e=>updateAction(i,"dueType",e.target.value)
+
+            }>
+              <option value='date'>specific Date</option>
+              <option value="range">Date Range</option>
+              </select>
+              {a.dueType==="date"?(
+                <input type="date"
+                value={a.dueAt}
+                onChange={e=>updatedAction(i,"dueAt",e.target.value)}/>
+              ):(
+                <>
+                <input type="date"
+                value={a.dueFrom}
+                onChange={e=>updatedAction(i,"dueFrom",e.target.value)}/>
+                <input type="date"
+                value={a.dueTo}
+                onChange={e=>updatedAction(i,"dueTo",e.target.value)}/>
+                
+                
+                </>
+              
+              )}
+              <label>
+                <input type="checkbox"
+                checked={a.appointmentNeeded}
+                onChange={e=> updateAction(i,"appointmentNeeded",e.target.checked
+
+                )}/>
+              </label>
+              </div>
+        ))}
+        <button onClick={addAction}>Add Action</button>
+        <button onClick={createPlan}>create plan</button>
       </div>
     </div>
   )

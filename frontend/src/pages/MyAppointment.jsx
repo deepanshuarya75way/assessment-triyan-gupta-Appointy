@@ -4,6 +4,7 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
+import FollowUpPlan from '../components/FollowUpPlan'
 
 const MyAppointments = () => {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext)
@@ -11,7 +12,7 @@ const MyAppointments = () => {
   const { doctors } = useContext(AppContext)
   const [appointments, setAppointments] = useState([])
   const [payment, setPayment] = useState('')
-
+  
   const months = [" ", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
   const slotDateFormat = (slotDate) => {
@@ -161,7 +162,15 @@ const MyAppointments = () => {
           </div>
         ))}
       </div>
+      
+      <div>
+        <FollowUpPlan backendUrl={backendUrl}
+        token={token}
+        navigate={navigate}/>
+
+      </div>
     </div>
+    
   )
 }
 
