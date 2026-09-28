@@ -169,6 +169,7 @@ const MyAppointments = () => {
         navigate={navigate}/>
 
       </div>
+      
     </div>
     
   )

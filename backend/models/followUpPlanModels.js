@@ -36,7 +36,7 @@ const actionSchema=new mongoose.Schema({
     default:false,
   },
   suggestedDoctorId:{
-    ttype:String,
+    type:String,
     default:null
   },
   helpRequested:{
@@ -55,7 +55,7 @@ const versionSchema=new mongoose.Schema({
     required:true
   },
   guidence:{
-    type:string,
+    type:String,
     default:""
   },
   action:{
@@ -63,7 +63,7 @@ const versionSchema=new mongoose.Schema({
     default:[]
   },
   createdBy:{
-    type:string,
+    type:String,
     required:true,
   },
   createdAt:{
@@ -74,14 +74,14 @@ const versionSchema=new mongoose.Schema({
 });
 const followUpPlanSchema=new mongoose.Schema({
   appointmentId:{
-    type:mongoose.Schema.Types.objectId,
+    type:mongoose.Schema.Types.ObjectId,
     ref:"appointment",
     required:true,
     unique:true
   },
   patientId:{
     type:String,
-    required:ture
+    required:true
   },
   doctorId:{
     type:String,

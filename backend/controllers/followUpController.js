@@ -1,4 +1,4 @@
-import followUpPlanModel from "../models/followUpPlanModels";
+import followUpPlanModel from "../models/followUpPlanModels.js";
 import appointmentModel from "../models/appointmentModel.js";
 import { version } from "react";
 

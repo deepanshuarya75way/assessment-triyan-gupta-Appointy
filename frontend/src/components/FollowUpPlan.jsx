@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
  const FollowUpPlan=({
   backendUrl,
   token,
-  navigate
- })
+  navigate,
+ })=>{
  const [plans,setPlans]=useState([]);
  const loadPlans=async()=>{
   const {data}=await axios.get(
@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 };
   const overDue=(a)=>{
     a.status!=="completed" && new Date(a.dueType==="date"? a.dueAt:a.dueTo)<new Date();
-      
+    
     return (
       <div className="mt-6">
         <h2 className="text-xl"> follow up plan</h2>
@@ -85,6 +85,7 @@ import React, { useEffect, useState } from "react";
       </div>
   );
   };
+}
 
   export default FollowUpPlan;
  
