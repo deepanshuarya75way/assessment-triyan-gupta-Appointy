@@ -1,13 +1,13 @@
 import followUpPlanModel from "../models/followUpPlanModels.js";
 import appointmentModel from "../models/appointmentModel.js";
-import { version } from "react";
+// import { version } from "react";
 
 const createFollowUpPlan=async(requestAnimationFrame,res)=>{
   try{
     const doctorId=req.user.id;
     const {
       appointmentId,
-      guidence,
+      guidance,
       actions
     }=req.body;
     if(!appointmentId || !Array.isArray(actions)){

@@ -16,40 +16,36 @@ const Login = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    try{
-    if (state === 'Sign Up') {
+    try {
+      if (state === 'Sign Up') {
+        const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password })
 
-      const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password })
-
-      if (data.success) {
-        localStorage.setItem('token', data.token)
-        setToken(data.token)
+        if (data.success) {
+          localStorage.setItem('token', data.token)
+          setToken(data.token)
+        } else {
+          toast.error(data.message)
+        }
       } else {
-        toast.error(data.message)
+        const { data } = await axios.post(backendUrl + '/api/user/login', { email, password })
+
+        if (data.success) {
+          localStorage.setItem('token', data.token)
+          setToken(data.token)
+        } else {
+          toast.error(data.message)
+        }
       }
-
-    } else {
-
-      const { data } = await axios.post(backendUrl + '/api/user/login', { email, password })
-
-      if (data.success) {
-        localStorage.setItem('token', data.token)
-        setToken(data.token)
-      } else {
-        toast.error(data.message)
-      }
-
-    }}catch(error){
-      toast.error(error.message)
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
     }
-
   }
 
   useEffect(() => {
     if (token) {
       navigate('/')
     }
-  }, [token])
+  }, [token, navigate])
 
   return (
     <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
@@ -74,7 +70,7 @@ const Login = () => {
         <button type='submit' className='bg-primary text-white w-full py-2 my-2 rounded-md text-base'>{state === 'Sign Up' ? 'Create account' : 'Login'}</button>
         {state === 'Sign Up'
           ? <p>Already have an account? <span onClick={() => setState('Login')} className='text-primary underline cursor-pointer'>Login here</span></p>
-          : <p>Create an new account? <span onClick={() => setState('Sign Up')} className='text-primary underline cursor-pointer'>Click here</span></p>
+          : <p>Create a new account? <span onClick={() => setState('Sign Up')} className='text-primary underline cursor-pointer'>Click here</span></p>
         }
       </div>
     </form>

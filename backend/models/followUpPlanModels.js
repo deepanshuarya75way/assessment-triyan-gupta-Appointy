@@ -7,7 +7,8 @@ const actionSchema=new mongoose.Schema({
   },
   description:{
     type:String,
-    default:""
+    default:"",
+    trim:true
   },
   dueType:{
     type:String,
@@ -46,6 +47,10 @@ const actionSchema=new mongoose.Schema({
   helpRequestedAt:{
     type:Date,
     default:null,
+  },
+  helpNote:{
+    type:String,
+    default:null,
   }
 });
 
@@ -54,11 +59,16 @@ const versionSchema=new mongoose.Schema({
     type:Number,
     required:true
   },
-  guidence:{
+  medicalDiagnosis:{
+    type:String,
+    default:"",
+    trim:true,
+  },
+  guidance:{
     type:String,
     default:""
   },
-  action:{
+  actions:{
     type:[actionSchema],
     default:[]
   },
@@ -69,6 +79,10 @@ const versionSchema=new mongoose.Schema({
   createdAt:{
     type:Date,
     default:Date.now
+  },
+  createdByName:{
+    type:String,
+    default:"Authorized staff",
   }
 
 });

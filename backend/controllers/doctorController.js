@@ -18,7 +18,10 @@ const loginDoctor = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const jwtSecret=process.env.JWT_SECRET  || "appointy_jwt_secret_key_12345";
+    const token =jwt.sign({ id: user._id },jwtSecret);
+
+    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({ success: true, token });
   } catch (error) {
     console.error(error);

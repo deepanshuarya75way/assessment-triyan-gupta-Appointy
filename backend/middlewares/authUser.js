@@ -7,9 +7,8 @@ const authUser = async (req, res, next) => {
         return res.json({ success: false, message: 'Not Authorized Login Again' })
     }
     try {
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET)
+        const token_decode = jwt.verify(token, 'your_fallback_secret_key_here')
 
-        // ✅ Fix: Ensure req.body is defined before assigning to it
         if (!req.body) req.body = {}
 
         req.body.userId = token_decode.id
